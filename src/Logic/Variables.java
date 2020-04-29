@@ -7,7 +7,10 @@ public class Variables {
     public static final int STEP = 30;
     public static final int BOTTOM_MARGIN = 150;
     public static final int CATCH_RADIUS = 30;
-    public static final int IMAGE_SIZE = 50;
+    public static final int IMAGE_SIZE = 100;
+
+    public static final int END_IMAGE_W = 300;
+    public static final int END_IMAGE_H = 200;
 
     public static int W;
     public static int H;

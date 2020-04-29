@@ -12,8 +12,8 @@ import static Logic.Variables.*;
 
 public class Catcher extends Player {
 
-    public Catcher (int h, int w){
-        super(Images.CATCHER, (w - IMAGE_SIZE)/2, h - BOTTOM_MARGIN);
+    public Catcher (){
+        super(Images.CATCHER, (Variables.W - IMAGE_SIZE)/2, H - BOTTOM_MARGIN);
     }
 
     public boolean catchObject(Player obj){

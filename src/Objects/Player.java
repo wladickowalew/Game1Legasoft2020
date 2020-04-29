@@ -1,10 +1,8 @@
 package Objects;
 
-import Logic.Variables;
-
 import java.awt.*;
 
-import static Logic.Variables.BOTTOM_MARGIN;
+import static Logic.Variables.*;
 
 public class Player {
     private Image img;
@@ -38,11 +36,7 @@ public class Player {
         this.y = y;
     }
 
-    public boolean isFall(){
-        return y + img.getHeight(null) >= Variables.H - BOTTOM_MARGIN;
-    }
-
     public void draw(Graphics g){
-        g.drawImage(img, x, y, null);
+        g.drawImage(img, x, y, IMAGE_SIZE, IMAGE_SIZE, null);
     }
 }
