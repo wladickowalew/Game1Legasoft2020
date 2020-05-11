@@ -6,8 +6,7 @@ import Objects.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Field extends JPanel {
@@ -16,20 +15,28 @@ public class Field extends JPanel {
     private ArrayList<FallenObject> objects = new ArrayList<>();
     private Timer paintTimer, updateTimer, levelTimer;
     private int lives, points;
-    private GameLabel liveslbl, pointslbl, levellbl;
+    private GameLabel liveslbl, pointslbl, levellbl, restartlbl;
     private boolean is_end;
 
     public Field(int w, int h){
         Variables.W = w;
         Variables.H = h;
         Images.loadImages();
+        addLabels();
+        start();
+    }
+
+    private void start(){
         cat = new Catcher();
+        if (updateTimer != null)
+            endGame();
         createTimers();
         lives = 3;
         points = 0;
         Variables.level = 1;
         is_end = false;
-        addLabels();
+        objects = new ArrayList<>();
+        updateLabels();
     }
 
     private void addLabels(){
@@ -45,6 +52,16 @@ public class Field extends JPanel {
         pointslbl = new GameLabel("Points", points);
         pointslbl.setLocation(430,10);
         this.add(pointslbl);
+
+        restartlbl = new GameLabel("Restart");
+        restartlbl.setLocation(640, 10);
+        restartlbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                start();
+            }
+        });
+        this.add(restartlbl);
     }
 
     private void updateLabels(){
