@@ -1,5 +1,6 @@
 package Logic;
 
+import GUI.GameLabel;
 import Objects.*;
 
 
@@ -8,13 +9,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Field extends JPanel {
 
     private Catcher cat;
     private ArrayList<FallenObject> objects = new ArrayList<>();
-    private Timer paintTimer, updateTimer;
+    private Timer paintTimer, updateTimer, levelTimer;
     private int lives, points, level;
+    private GameLabel liveslbl, pointslbl, levellbl;
     private boolean is_end;
 
     public Field(int w, int h){
@@ -27,6 +30,28 @@ public class Field extends JPanel {
         points = 0;
         level = 1;
         is_end = false;
+        addLabels();
+    }
+
+    private void addLabels(){
+        setLayout(null);
+        levellbl = new GameLabel("Level", level);
+        levellbl.setLocation(10,10);
+        this.add(levellbl);
+
+        liveslbl = new GameLabel("Lives", lives);
+        liveslbl.setLocation(220,10);
+        this.add(liveslbl);
+
+        pointslbl = new GameLabel("Points", points);
+        pointslbl.setLocation(430,10);
+        this.add(pointslbl);
+    }
+
+    private void updateLabels(){
+        levellbl.change(level);
+        liveslbl.change(lives);
+        pointslbl.change(points);
     }
 
     private void showInfo(){
@@ -34,7 +59,9 @@ public class Field extends JPanel {
     }
 
     private void update(){
-        double p = 0.3;
+        double d = (Variables.MAX_OBJECT_P - Variables.MIN_OBJECT_P)/(Variables.MAX_LEVEL - 1);
+        System.out.println("level = "+level + " p = " + (Variables.MIN_OBJECT_P + (level - 1) * d));
+        double p = Variables.MIN_OBJECT_P + (level - 1) * d;
         if (Math.random() < p)
             addObject();
         checkFall();
@@ -58,6 +85,7 @@ public class Field extends JPanel {
         if (lives < 0) lives = 0;
         if (points < 0) points = 0;
         showInfo();
+        updateLabels();
     }
 
     private void addObject(){
@@ -84,6 +112,15 @@ public class Field extends JPanel {
             }
         });
         updateTimer.start();
+        levelTimer = new Timer(Variables.LEVEL_UPDATE * 1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (level < Variables.MAX_LEVEL)
+                    level++;
+                updateLabels();
+            }
+        });
+        levelTimer.start();
     }
 
     public void catLeft(){ cat.move(-Variables.STEP); }
@@ -92,6 +129,7 @@ public class Field extends JPanel {
     private void endGame(){
         updateTimer.stop();
         paintTimer.stop();
+        levelTimer.stop();
         is_end = true;
         repaint();
     }

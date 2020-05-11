@@ -12,6 +12,11 @@ public class Variables {
     public static final int END_IMAGE_W = 300;
     public static final int END_IMAGE_H = 200;
 
+    public static final int MAX_LEVEL = 20;
+    public static final int LEVEL_UPDATE = 8; // in seconds
+    public static final double MIN_OBJECT_P = 0.1;
+    public static final double MAX_OBJECT_P = 0.4;
+
     public static int W;
     public static int H;
 }
