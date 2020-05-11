@@ -6,6 +6,9 @@ import java.awt.*;
 
 public class PhilStone extends FallenObject {
 
+    protected int mint = 10;
+    protected int maxt = 30;
+
     public PhilStone() {
         super(Images.PHIL_STONE);
     }

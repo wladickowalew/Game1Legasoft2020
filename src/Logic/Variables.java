@@ -19,4 +19,5 @@ public class Variables {
 
     public static int W;
     public static int H;
+    public static int level;
 }

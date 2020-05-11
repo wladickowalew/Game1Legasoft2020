@@ -9,14 +9,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class Field extends JPanel {
 
     private Catcher cat;
     private ArrayList<FallenObject> objects = new ArrayList<>();
     private Timer paintTimer, updateTimer, levelTimer;
-    private int lives, points, level;
+    private int lives, points;
     private GameLabel liveslbl, pointslbl, levellbl;
     private boolean is_end;
 
@@ -28,14 +27,14 @@ public class Field extends JPanel {
         createTimers();
         lives = 3;
         points = 0;
-        level = 1;
+        Variables.level = 1;
         is_end = false;
         addLabels();
     }
 
     private void addLabels(){
         setLayout(null);
-        levellbl = new GameLabel("Level", level);
+        levellbl = new GameLabel("Level", Variables.level);
         levellbl.setLocation(10,10);
         this.add(levellbl);
 
@@ -49,19 +48,19 @@ public class Field extends JPanel {
     }
 
     private void updateLabels(){
-        levellbl.change(level);
+        levellbl.change(Variables.level);
         liveslbl.change(lives);
         pointslbl.change(points);
     }
 
     private void showInfo(){
-        System.out.println("Level: " + level + " Points: " + points + " Lives: " + lives);
+        System.out.println("Level: " + Variables.level + " Points: " + points + " Lives: " + lives);
     }
 
     private void update(){
         double d = (Variables.MAX_OBJECT_P - Variables.MIN_OBJECT_P)/(Variables.MAX_LEVEL - 1);
-        System.out.println("level = "+level + " p = " + (Variables.MIN_OBJECT_P + (level - 1) * d));
-        double p = Variables.MIN_OBJECT_P + (level - 1) * d;
+        System.out.println("level = "+ Variables.level + " p = " + (Variables.MIN_OBJECT_P + (Variables.level - 1) * d));
+        double p = Variables.MIN_OBJECT_P + (Variables.level - 1) * d;
         if (Math.random() < p)
             addObject();
         checkFall();
@@ -108,7 +107,6 @@ public class Field extends JPanel {
             objects.add(new Sidor());
         if (0.97 <= p)
             objects.add(new BloodSucker());
-
     }
 
     private void createTimers(){
@@ -129,8 +127,8 @@ public class Field extends JPanel {
         levelTimer = new Timer(Variables.LEVEL_UPDATE * 1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (level < Variables.MAX_LEVEL)
-                    level++;
+                if (Variables.level < Variables.MAX_LEVEL)
+                    Variables.level++;
                 updateLabels();
             }
         });

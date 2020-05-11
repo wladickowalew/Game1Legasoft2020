@@ -13,15 +13,21 @@ import static Logic.Variables.H;
 public class FallenObject extends Player{
 
     private Timer fallTimer;
+    protected int mint = 30;
+    protected int maxt = 60;
 
     public FallenObject(Image img) {
         super(img, 0, 0);
         setY(-100);
         setX(randInt(0, Variables.W - img.getWidth(null)));
-        fallTimer = new Timer(50, new ActionListener() {
+        int dx = randInt(1,4);
+        double k = 1 - Variables.level / Variables.MAX_LEVEL;
+        int t = mint + (int) (k * randInt(0, maxt - mint));
+
+        fallTimer = new Timer(t, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setY(getY() + 2);
+                setY(getY() + dx);
             }
         });
         fallTimer.start();
