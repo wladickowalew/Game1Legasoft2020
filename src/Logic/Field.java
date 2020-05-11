@@ -90,11 +90,25 @@ public class Field extends JPanel {
 
     private void addObject(){
         double p = Math.random();
-        if (p < 0.8){
+        if (p < 0.38)
             objects.add(new SimpleEnemy());
-        }else{
+        if (0.38 <= p && p < 0.50)
             objects.add(new Bomb());
-        }
+        if (0.50 <= p && p < 0.62)
+            objects.add(new FirstAid());
+        if (0.62 <= p && p < 0.74)
+            objects.add(new Case());
+        if (0.74 <= p && p < 0.86)
+            objects.add(new Theif());
+        if (0.86 <= p && p < 0.90)
+            objects.add(new PhilStone());
+        if (0.90 <= p && p < 0.94)
+            objects.add(new DreamMaker());
+        if (0.94 <= p && p < 0.97)
+            objects.add(new Sidor());
+        if (0.97 <= p)
+            objects.add(new BloodSucker());
+
     }
 
     private void createTimers(){
